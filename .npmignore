@@ -1,0 +1,7 @@
+# Ignore test, config, and source files
+src/
+tsconfig.json
+bun.lock
+node_modules/
+.git/
+.gitignore

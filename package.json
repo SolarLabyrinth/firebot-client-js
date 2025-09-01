@@ -1,11 +1,23 @@
 {
   "name": "@solarlabyrinth/firebot-client",
   "version": "0.0.1",
-  "module": "dist/client.ts",
+  "description": "A client library for the Firebot API",
+  "main": "dist/client.js",
+  "types": "dist/client.d.ts",
+  "module": "dist/client.js",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SolarLabyrinth/firebot-client-js.git"
+  },
+  "author": "SolarLabyrinth",
+  "license": "MIT",
   "dependencies": {
     "zod": "^4.1.5"
   },
