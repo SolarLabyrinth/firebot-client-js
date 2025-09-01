@@ -1,6 +1,6 @@
 # @solarlabyrinth/firebot-client
 
-A client library for the Firebot API.
+A client library for the Firebot API. Tested against Firebot v5.64.0
 
 ## Installation
 
@@ -33,10 +33,19 @@ await firebot.getViewers();
 await firebot.exportViewers();
 await firebot.getViewer("1111111111");
 
+const counterId = "94ca0cbd-1c30-4800-8c84-2d4ca8450587";
 await firebot.getCounters();
-await firebot.getCounter("94ca0cbd-1c30-4800-8c84-2d4ca8450587");
+await firebot.getCounter(counterId);
 // Add 1 to the counter
-await firebot.updateCounter("94ca0cbd-1c30-4800-8c84-2d4ca8450587", 1, true);
+await firebot.updateCounter(counterId, 1, true);
 // Set the counter to 10.
-await firebot.updateCounter("94ca0cbd-1c30-4800-8c84-2d4ca8450587", 10, false);
+await firebot.updateCounter(counterId, 10, false);
+
+const queueId = "28899a40-af91-11ef-a872-81b56b0d156a";
+await firebot.getEffectQueues();
+await firebot.getEffectQueue(queueId);
+await firebot.pauseEffectQueue(queueId);
+await firebot.resumeEffectQueue(queueId);
+await firebot.toggleEffectQueue(queueId);
+await firebot.clearEffectQueue(queueId);
 ```

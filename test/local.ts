@@ -24,3 +24,23 @@ console.log(
   await firebot.updateCounter("94ca0cbd-1c30-4800-8c84-2d4ca8450587", 7, true)
 );
 console.log(await firebot.getCounters());
+
+console.log(await firebot.getEffectQueues());
+console.log(
+  await firebot.getEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
+);
+console.log(
+  await firebot.pauseEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
+);
+console.log(
+  await firebot.resumeEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
+);
+console.log(
+  await firebot.toggleEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
+);
+console.log(
+  await firebot.toggleEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
+);
+console.log(
+  await firebot.clearEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
+);

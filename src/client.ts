@@ -9,6 +9,8 @@ import {
   GetCountersSchema,
   CountersSchema,
   CounterUpdateResponseSchema,
+  GetEffectQueuesSchema,
+  GetEffectQueueSchema,
 } from "./schemas.js";
 
 export class FirebotApi {
@@ -26,14 +28,14 @@ export class FirebotApi {
     const json = await response.json();
     return json;
   }
-  private async post(endpoint: string, body: unknown) {
+  private async post(endpoint: string, body?: unknown) {
     const url = new URL(endpoint, this.baseUrl);
     const response = await fetch(url.toString(), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: body ? JSON.stringify(body) : null,
     });
     const json = await response.json();
     return json;
@@ -120,6 +122,39 @@ export class FirebotApi {
       override,
     });
     const data = CounterUpdateResponseSchema.parse(json);
+    return data;
+  }
+
+  // Effect Queues
+
+  async getEffectQueues() {
+    const json = await this.get(`/api/v1/queues`);
+    const data = GetEffectQueuesSchema.parse(json);
+    return data;
+  }
+  async getEffectQueue(queueId: string) {
+    const json = await this.get(`/api/v1/queues/${queueId}`);
+    const data = GetEffectQueueSchema.parse(json);
+    return data;
+  }
+  async pauseEffectQueue(queueId: string) {
+    const json = await this.post(`/api/v1/queues/${queueId}/pause`);
+    const data = GetEffectQueueSchema.parse(json);
+    return data;
+  }
+  async resumeEffectQueue(queueId: string) {
+    const json = await this.post(`/api/v1/queues/${queueId}/resume`);
+    const data = GetEffectQueueSchema.parse(json);
+    return data;
+  }
+  async toggleEffectQueue(queueId: string) {
+    const json = await this.post(`/api/v1/queues/${queueId}/toggle`);
+    const data = GetEffectQueueSchema.parse(json);
+    return data;
+  }
+  async clearEffectQueue(queueId: string) {
+    const json = await this.post(`/api/v1/queues/${queueId}/clear`);
+    const data = GetEffectQueueSchema.parse(json);
     return data;
   }
 }

@@ -93,3 +93,14 @@ export const CounterUpdateResponseSchema = z.object({
   oldValue: z.number(),
   newValue: z.number(),
 });
+
+export const EffectQueueSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  mode: z.string(),
+  sortTags: z.array(z.unknown()),
+  active: z.boolean(),
+  length: z.number(),
+});
+export const GetEffectQueuesSchema = z.array(EffectQueueSchema);
+export const GetEffectQueueSchema = EffectQueueSchema;
