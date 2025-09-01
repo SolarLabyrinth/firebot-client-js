@@ -50,7 +50,39 @@ const GetPresetEffectListsSchema = z.array(
   })
 );
 
-class FireBotApi {
+const ViewerSchema = z.object({
+  id: z.string(),
+  username: z.string(),
+  displayName: z.string(),
+});
+
+const GetViewersSchema = z.array(ViewerSchema);
+
+const ViewerExportSchema = z.object({
+  _id: z.string(),
+  username: z.string(),
+  displayName: z.string(),
+  profilePicUrl: z.string(),
+  twitch: z.boolean(),
+  twitchRoles: z.array(z.string()),
+  online: z.boolean(),
+  onlineAt: z.number(),
+  lastSeen: z.number(),
+  joinDate: z.number(),
+  minutesInChannel: z.number(),
+  chatMessages: z.number(),
+  disableAutoStatAccrual: z.boolean(),
+  disableActiveUserList: z.boolean(),
+  disableViewerList: z.boolean(),
+  metadata: z.record(z.string(), z.unknown()),
+  currency: z.record(z.string(), z.unknown()),
+  ranks: z.optional(z.record(z.string(), z.unknown())),
+});
+
+const ExportViewersSchema = z.array(ViewerExportSchema);
+const GetViewerSchema = ViewerExportSchema;
+
+export class FireBotApi {
   private baseUrl: string;
 
   constructor(baseUrl: string) {
@@ -106,12 +138,10 @@ class FireBotApi {
 
   async getCustomVariables() {
     const json = await this.get(`/api/v1/custom-variables`);
-    // const data = GetPresetEffectListsSchema.parse(json);
     return json;
   }
   async getCustomVariable(name: string) {
     const json = await this.get(`/api/v1/custom-variables/${name}`);
-    // const data = GetPresetEffectListsSchema.parse(json);
     return json;
   }
   async setCustomVariable(name: string, value: any, ttl: number) {
@@ -119,16 +149,24 @@ class FireBotApi {
       data: value,
       ttl,
     });
-    // const data = GetPresetEffectListsSchema.parse(json);
     return json;
   }
-}
 
-// const firebot = new FireBotApi("http://localhost:7472");
-// console.log(await firebot.getEffects());
-// console.log(await firebot.getEffect("firebot:obs-set-browser-source-url"));
-// console.log(await firebot.getPresetEffectLists());
-// console.log(await firebot.getCustomVariable("test"));
-// console.log(await firebot.setCustomVariable("test", "example", 1000));
-// console.log(await firebot.getCustomVariable("test"));
-// console.log(await firebot.getCustomVariables());
+  // Viewers
+
+  async getViewers() {
+    const json = await this.get(`/api/v1/viewers`);
+    const data = GetViewersSchema.parse(json);
+    return data;
+  }
+  async getViewer(id: string) {
+    const json = await this.get(`/api/v1/viewers/${id}`);
+    const data = GetViewerSchema.parse(json);
+    return data;
+  }
+  async exportViewers() {
+    const json = await this.get(`/api/v1/viewers/export`);
+    const data = ExportViewersSchema.parse(json);
+    return data;
+  }
+}
