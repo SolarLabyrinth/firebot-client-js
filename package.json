@@ -1,0 +1,16 @@
+{
+  "name": "@solarlabyrinth/firebot-client",
+  "version": "0.0.1",
+  "module": "dist/client.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.21",
+    "typescript": "^5.9.2"
+  }
+}
