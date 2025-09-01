@@ -6,7 +6,7 @@ export const GetStatusSchema = z.object({
   }),
 });
 
-export const EffectSchema = z.object({
+const EffectSchema = z.object({
   id: z.string(),
   name: z.string(),
   description: z.string(),
@@ -58,7 +58,7 @@ export const ViewerSchema = z.object({
 
 export const GetViewersSchema = z.array(ViewerSchema);
 
-export const ViewerExportSchema = z.object({
+const ViewerExportSchema = z.object({
   _id: z.string(),
   username: z.string(),
   displayName: z.string(),
@@ -94,7 +94,7 @@ export const CounterUpdateResponseSchema = z.object({
   newValue: z.number(),
 });
 
-export const EffectQueueSchema = z.object({
+const EffectQueueSchema = z.object({
   id: z.string(),
   name: z.string(),
   mode: z.string(),
@@ -104,3 +104,24 @@ export const EffectQueueSchema = z.object({
 });
 export const GetEffectQueuesSchema = z.array(EffectQueueSchema);
 export const GetEffectQueueSchema = EffectQueueSchema;
+
+export const GetTimersSchema = z.array(
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    active: z.boolean(),
+  })
+);
+export const GetTimerSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  active: z.boolean(),
+  onlyWhenLive: z.boolean(),
+  interval: z.number(),
+  requiredChatLines: z.number(),
+  sortTags: z.array(z.unknown()),
+  effects: z.object({
+    id: z.string(),
+    list: z.array(z.unknown()),
+  }),
+});

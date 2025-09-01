@@ -11,6 +11,8 @@ import {
   CounterUpdateResponseSchema,
   GetEffectQueuesSchema,
   GetEffectQueueSchema,
+  GetTimersSchema,
+  GetTimerSchema,
 } from "./schemas.js";
 
 export class FirebotApi {
@@ -128,13 +130,13 @@ export class FirebotApi {
   // Timers
   async getTimers() {
     const json = await this.get(`/api/v1/timers`);
-    // const data = GetEffectQueuesSchema.parse(json);
-    return json;
+    const data = GetTimersSchema.parse(json);
+    return data;
   }
   async getTimer(timerId: string) {
     const json = await this.get(`/api/v1/timers/${timerId}`);
-    // const data = GetEffectQueuesSchema.parse(json);
-    return json;
+    const data = GetTimerSchema.parse(json);
+    return data;
   }
   async enableTimer(timerId: string) {
     await this.get(`/api/v1/timers/${timerId}/enable`);
