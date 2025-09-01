@@ -41,5 +41,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "exclude": ["./test/**/*"]
+  "exclude": ["./test/**/*", "./dist/**/*"]
 }
