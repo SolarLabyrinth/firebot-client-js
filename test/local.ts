@@ -1,6 +1,7 @@
 import { FireBotApi } from "../src/client.js";
 
 const firebot = new FireBotApi("http://localhost:7472");
+console.log(await firebot.getStatus());
 console.log(await firebot.getEffects());
 console.log(await firebot.getEffect("firebot:obs-set-browser-source-url"));
 console.log(await firebot.getPresetEffectLists());

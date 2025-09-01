@@ -1,6 +1,6 @@
 {
   "name": "@solarlabyrinth/firebot-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A client library for the Firebot API",
   "main": "dist/client.js",
   "types": "dist/client.d.ts",
@@ -10,7 +10,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc"
+    "start": "bun test/local.ts",
+    "build": "rm -rf dist && tsc"
   },
   "repository": {
     "type": "git",
