@@ -125,6 +125,30 @@ export class FirebotApi {
     return data;
   }
 
+  // Timers
+  async getTimers() {
+    const json = await this.get(`/api/v1/timers`);
+    // const data = GetEffectQueuesSchema.parse(json);
+    return json;
+  }
+  async getTimer(timerId: string) {
+    const json = await this.get(`/api/v1/timers/${timerId}`);
+    // const data = GetEffectQueuesSchema.parse(json);
+    return json;
+  }
+  async enableTimer(timerId: string) {
+    await this.get(`/api/v1/timers/${timerId}/enable`);
+  }
+  async disableTimer(timerId: string) {
+    await this.get(`/api/v1/timers/${timerId}/disable`);
+  }
+  async toggleTimer(timerId: string) {
+    await this.get(`/api/v1/timers/${timerId}/toggle`);
+  }
+  async clearTimer(timerId: string) {
+    await this.get(`/api/v1/timers/${timerId}/clear`);
+  }
+
   // Effect Queues
 
   async getEffectQueues() {

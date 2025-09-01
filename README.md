@@ -41,6 +41,14 @@ await firebot.updateCounter(counterId, 1, true);
 // Set the counter to 10.
 await firebot.updateCounter(counterId, 10, false);
 
+const timerId = "09ddcae0-94b0-11ef-a33b-371e00c340c1";
+await firebot.getTimers();
+await firebot.getTimer(timerId);
+await firebot.enableTimer(timerId);
+await firebot.disableTimer(timerId);
+await firebot.toggleTimer(timerId);
+await firebot.clearTimer(timerId);
+
 const queueId = "28899a40-af91-11ef-a872-81b56b0d156a";
 await firebot.getEffectQueues();
 await firebot.getEffectQueue(queueId);

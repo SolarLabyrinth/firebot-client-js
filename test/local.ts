@@ -44,3 +44,11 @@ console.log(
 console.log(
   await firebot.clearEffectQueue("28899a40-af91-11ef-a872-81b56b0d156a")
 );
+
+console.log(await firebot.getTimers());
+console.log(await firebot.getTimer("09ddcae0-94b0-11ef-a33b-371e00c340c1"));
+console.log(await firebot.enableTimer("09ddcae0-94b0-11ef-a33b-371e00c340c1"));
+console.log(await firebot.disableTimer("09ddcae0-94b0-11ef-a33b-371e00c340c1"));
+console.log(await firebot.toggleTimer("09ddcae0-94b0-11ef-a33b-371e00c340c1"));
+console.log(await firebot.toggleTimer("09ddcae0-94b0-11ef-a33b-371e00c340c1"));
+console.log(await firebot.clearTimer("09ddcae0-94b0-11ef-a33b-371e00c340c1"));
