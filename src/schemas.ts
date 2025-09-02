@@ -125,3 +125,50 @@ export const GetTimerSchema = z.object({
     list: z.array(z.unknown()),
   }),
 });
+
+export const GetCustomVariableValueSchema = z.unknown();
+
+export const GetCustomVariablesSchema = z.record(
+  z.string(),
+  z.object({
+    t: z.number(),
+    v: z.unknown(),
+  })
+);
+
+export const GetReplaceVariablesSchema = z.array(
+  z.object({
+    definition: z.object({
+      handle: z.string(),
+      description: z.string(),
+      usage: z.optional(z.string()),
+      examples: z.optional(
+        z.array(
+          z.object({
+            usage: z.string(),
+            description: z.string(),
+          })
+        )
+      ),
+      categories: z.optional(z.array(z.string())),
+      possibleDataOutput: z.array(z.string()),
+    }),
+    handle: z.string(),
+    triggers: z.optional(
+      z.union([
+        z.object({
+          event: z.array(z.string()),
+          manual: z.optional(z.boolean()),
+        }),
+        z.object({
+          command: z.optional(z.boolean()),
+          event: z.optional(z.boolean()),
+          manual: z.optional(z.boolean()),
+          custom_script: z.optional(z.boolean()),
+          preset: z.optional(z.boolean()),
+          channel_reward: z.optional(z.boolean()),
+        }),
+      ])
+    ),
+  })
+);

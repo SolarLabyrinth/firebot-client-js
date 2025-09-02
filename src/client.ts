@@ -13,9 +13,12 @@ import {
   GetEffectQueueSchema,
   GetTimersSchema,
   GetTimerSchema,
+  GetCustomVariablesSchema,
+  GetCustomVariableValueSchema,
+  GetReplaceVariablesSchema,
 } from "./schemas.js";
 
-export class FirebotApi {
+export class FirebotClient {
   private baseUrl: string;
 
   constructor(baseUrl: string) {
@@ -47,96 +50,139 @@ export class FirebotApi {
 
   async getStatus() {
     const json = await this.get("/api/v1/status");
-    const data = GetStatusSchema.parse(json);
-    return data;
+    return GetStatusSchema.parse(json);
   }
 
   // Effects
 
   async getEffects() {
-    const json = await this.get("/api/v1/effects");
-    const data = GetEffectsSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get("/api/v1/effects");
+      return GetEffectsSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
   async getEffect(id: string) {
-    const json = await this.get(`/api/v1/effects/${id}`);
-    const data = GetEffectSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/effects/${id}`);
+      return GetEffectSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
-
   async getPresetEffectLists() {
-    const json = await this.get(`/api/v1/effects/preset`);
-    const data = GetPresetEffectListsSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/effects/preset`);
+      return GetPresetEffectListsSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
 
   // Custom Variables
 
   async getCustomVariables() {
-    const json = await this.get(`/api/v1/custom-variables`);
-    return json;
+    try {
+      const json = await this.get(`/api/v1/custom-variables`);
+      return GetCustomVariablesSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async getCustomVariable(name: string) {
-    const json = await this.get(`/api/v1/custom-variables/${name}`);
-    return json;
+    try {
+      const json = await this.get(`/api/v1/custom-variables/${name}`);
+      return GetCustomVariableValueSchema.parse(json);
+    } catch {
+      return {};
+    }
   }
-  async setCustomVariable(name: string, value: any, ttl: number) {
-    const json = await this.post(`/api/v1/custom-variables/${name}`, {
-      data: value,
-      ttl,
-    });
-    return json;
+  async setCustomVariable(name: string, data: any, ttl: number) {
+    await this.post(`/api/v1/custom-variables/${name}`, { data, ttl });
+  }
+
+  // Replace Variables
+
+  async getReplaceVariables() {
+    try {
+      const json = await this.get("/api/v1/variables");
+      return GetReplaceVariablesSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
 
   // Viewers
 
   async getViewers() {
-    const json = await this.get(`/api/v1/viewers`);
-    const data = GetViewersSchema.parse(json);
-    return data;
-  }
-  async getViewer(id: string) {
-    const json = await this.get(`/api/v1/viewers/${id}`);
-    const data = GetViewerSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/viewers`);
+      return GetViewersSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
   async exportViewers() {
-    const json = await this.get(`/api/v1/viewers/export`);
-    const data = ExportViewersSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/viewers/export`);
+      return ExportViewersSchema.parse(json);
+    } catch {
+      return [];
+    }
+  }
+  async getViewer(id: string) {
+    try {
+      const json = await this.get(`/api/v1/viewers/${id}`);
+      return GetViewerSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
 
   // Counters
 
   async getCounters() {
-    const json = await this.get(`/api/v1/counters`);
-    const data = GetCountersSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/counters`);
+      return GetCountersSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
   async getCounter(counterId: string) {
-    const json = await this.get(`/api/v1/counters/${counterId}`);
-    const data = CountersSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/counters/${counterId}`);
+      return CountersSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async updateCounter(counterId: string, value: number, override?: boolean) {
     const json = await this.post(`/api/v1/counters/${counterId}`, {
       value,
       override,
     });
-    const data = CounterUpdateResponseSchema.parse(json);
-    return data;
+    return CounterUpdateResponseSchema.parse(json);
   }
 
   // Timers
+
   async getTimers() {
-    const json = await this.get(`/api/v1/timers`);
-    const data = GetTimersSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/timers`);
+      return GetTimersSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
   async getTimer(timerId: string) {
-    const json = await this.get(`/api/v1/timers/${timerId}`);
-    const data = GetTimerSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/timers/${timerId}`);
+      return GetTimerSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async enableTimer(timerId: string) {
     await this.get(`/api/v1/timers/${timerId}/enable`);
@@ -154,33 +200,51 @@ export class FirebotApi {
   // Effect Queues
 
   async getEffectQueues() {
-    const json = await this.get(`/api/v1/queues`);
-    const data = GetEffectQueuesSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/queues`);
+      return GetEffectQueuesSchema.parse(json);
+    } catch {
+      return [];
+    }
   }
   async getEffectQueue(queueId: string) {
-    const json = await this.get(`/api/v1/queues/${queueId}`);
-    const data = GetEffectQueueSchema.parse(json);
-    return data;
+    try {
+      const json = await this.get(`/api/v1/queues/${queueId}`);
+      return GetEffectQueueSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async pauseEffectQueue(queueId: string) {
-    const json = await this.post(`/api/v1/queues/${queueId}/pause`);
-    const data = GetEffectQueueSchema.parse(json);
-    return data;
+    try {
+      const json = await this.post(`/api/v1/queues/${queueId}/pause`);
+      return GetEffectQueueSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async resumeEffectQueue(queueId: string) {
-    const json = await this.post(`/api/v1/queues/${queueId}/resume`);
-    const data = GetEffectQueueSchema.parse(json);
-    return data;
+    try {
+      const json = await this.post(`/api/v1/queues/${queueId}/resume`);
+      return GetEffectQueueSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async toggleEffectQueue(queueId: string) {
-    const json = await this.post(`/api/v1/queues/${queueId}/toggle`);
-    const data = GetEffectQueueSchema.parse(json);
-    return data;
+    try {
+      const json = await this.post(`/api/v1/queues/${queueId}/toggle`);
+      return GetEffectQueueSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
   async clearEffectQueue(queueId: string) {
-    const json = await this.post(`/api/v1/queues/${queueId}/clear`);
-    const data = GetEffectQueueSchema.parse(json);
-    return data;
+    try {
+      const json = await this.post(`/api/v1/queues/${queueId}/clear`);
+      return GetEffectQueueSchema.parse(json);
+    } catch {
+      return null;
+    }
   }
 }
