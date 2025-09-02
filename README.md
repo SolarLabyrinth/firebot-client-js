@@ -15,9 +15,9 @@ bun add @solarlabyrinth/firebot-client
 ## Usage
 
 ```typescript
-import { FirebotApi } from "@solarlabyrinth/firebot-client";
+import { FirebotClient } from "@solarlabyrinth/firebot-client";
 
-const firebot = new FirebotApi("http://localhost:7472");
+const firebot = new FirebotClient("http://localhost:7472");
 
 await firebot.getStatus();
 
@@ -28,6 +28,8 @@ await firebot.getPresetEffectLists();
 await firebot.getCustomVariable("test");
 await firebot.setCustomVariable("test", "example", 1000);
 await firebot.getCustomVariables();
+
+await firebot.getReplaceVariables();
 
 await firebot.getViewers();
 await firebot.exportViewers();
